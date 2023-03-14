@@ -34,6 +34,8 @@ public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
+        } else if(update.hasPollAnswer()){
+            System.out.println(update.getPollAnswer().getUser().getFirstName());
         }
     }
 

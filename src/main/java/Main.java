@@ -4,10 +4,14 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 public class Main {
     public static void main(String[] args) {
-    // You can use your own BotSession implementation if needed.
+
+        DreamTeamRaidCheckBot dreamTeamRaidCheckBot = new DreamTeamRaidCheckBot();
+        DateAndTimeCheckThread dateAndTimeCheckThread = new DateAndTimeCheckThread(dreamTeamRaidCheckBot);
+        dateAndTimeCheckThread.start();
+
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-            botsApi.registerBot(new DreamTeamRaidCheckBot());
+            botsApi.registerBot(dreamTeamRaidCheckBot);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

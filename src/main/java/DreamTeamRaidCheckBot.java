@@ -3,12 +3,15 @@ import org.telegram.telegrambots.meta.api.methods.polls.SendPoll;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.polls.PollAnswer;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
+    private int receivedReply;
+    private boolean negativeReply;
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -19,22 +22,20 @@ public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
             message.setText(update.getMessage().getText());
             // System.out.println(update.getMessage().getChatId());
 
-            List<String> options = new ArrayList<>();
-            options.add("да");
-            options.add("нет");
-
-            SendPoll poll = new SendPoll();
-            poll.setChatId(update.getMessage().getChatId().toString());
-            poll.setIsAnonymous(false);
-            poll.setQuestion("Сбору быть или не быть, вот в чем вопрос");
-            poll.setOptions(options);
-
-            try {
-                execute(poll); // Call method to send the message
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
         } else if(update.hasPollAnswer()){
+            PollAnswer pollAnswer = update.getPollAnswer();
+            List <Integer> optionIds = pollAnswer.getOptionIds();
+            if (optionIds.isEmpty()){
+                receivedReply = receivedReply - 1;
+            } else {
+                receivedReply = receivedReply + 1;
+                for (Integer option: optionIds) {
+                    if (option == 1) {
+                        negativeReply = true;
+                        break;
+                    }
+                }
+            }
             System.out.println(update.getPollAnswer().getUser().getFirstName());
         }
     }
@@ -54,5 +55,40 @@ public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
             return true;
         }
         return false;
+    }
+
+    public void sendPoll(){
+        List<String> options = new ArrayList<>();
+        options.add("да");
+        options.add("нет");
+
+        SendPoll poll = new SendPoll();
+        poll.setChatId("-938867741");
+        poll.setIsAnonymous(false);
+        poll.setQuestion("Сбору быть или не быть, вот в чем вопрос");
+        poll.setOptions(options);
+
+        try {
+            execute(poll); // Call method to send the message
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendResult(){
+        SendMessage message = new SendMessage(); // Create a SendMessage object with mandatory fields
+        message.setChatId("-938867741");
+        if (receivedReply == 4 & !negativeReply) {
+            message.setText("да будет сбор");
+        } else {
+            message.setText("Сбор отменен, трифекта сама себя не сделает, лентяи");
+        }
+        try {
+            execute(message);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+        receivedReply = 0;
+        negativeReply = false;
     }
 }

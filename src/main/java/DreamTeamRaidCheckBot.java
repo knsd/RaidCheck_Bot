@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
-    private final Long chatID1 = -938867741L;
+    private final Long chatID1 = -1001516615641L;
     private final Long chatID2 = 1328572042L;
 
     private DataSaver dataSaver;
@@ -57,6 +57,7 @@ public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
     }
 
     public boolean toReact(Message message){
+        System.out.println(message.getChatId());
         if (Objects.equals(message.getChatId(), chatID1) || Objects.equals(message.getChatId(), chatID2)) {
             return true;
         }

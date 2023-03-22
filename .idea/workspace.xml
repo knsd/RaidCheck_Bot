@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="790cc4f4-b0f1-46f6-90c1-c027ec7755fa" name="Changes" comment="time and replies check">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DateAndTimeCheckThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DateAndTimeCheckThread.java" afterDir="false" />
+    <list default="true" id="790cc4f4-b0f1-46f6-90c1-c027ec7755fa" name="Changes" comment="data saving">
+      <change beforePath="$PROJECT_DIR$/src/main/java/DataSaver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataSaver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DreamTeamRaidCheckBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DreamTeamRaidCheckBot.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +90,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678989165413</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="data saving">
+      <created>1679478173759</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1679478173759</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -109,6 +115,7 @@
     <MESSAGE value="first version" />
     <MESSAGE value="upd" />
     <MESSAGE value="time and replies check" />
-    <option name="LAST_COMMIT_MESSAGE" value="time and replies check" />
+    <MESSAGE value="data saving" />
+    <option name="LAST_COMMIT_MESSAGE" value="data saving" />
   </component>
 </project>

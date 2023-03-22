@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.concurrent.Semaphore;
 
 public class DataSaver {
     private int receivedReply;
@@ -10,7 +11,11 @@ public class DataSaver {
     private int lastDateCheck;
     private int lastResultCheck;
 
+    private Semaphore semaphore;
+
     public DataSaver() {
+        semaphore = new Semaphore(1);
+
         File savedData = new File("SavedData.txt");
         try {
             FileReader fileReader = new FileReader(savedData);
@@ -64,6 +69,13 @@ public class DataSaver {
     }
 
     public void saveCurrentData (){
+        try {
+            semaphore.acquire();
+        }
+        catch (Exception e) {
+            System.out.println("Error");
+        }
+
         File savedData = new File("SavedData.txt");
         try{
             FileWriter fileWriter = new FileWriter(savedData);
@@ -79,6 +91,7 @@ public class DataSaver {
         catch (IOException e){
             System.out.println("File wasn't updated");
         }
+        semaphore.release();
     }
 
 }

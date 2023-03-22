@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="790cc4f4-b0f1-46f6-90c1-c027ec7755fa" name="Changes" comment="upd">
-      <change afterPath="$PROJECT_DIR$/src/main/java/DateAndTimeCheckThread.java" afterDir="false" />
+    <list default="true" id="790cc4f4-b0f1-46f6-90c1-c027ec7755fa" name="Changes" comment="time and replies check">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DateAndTimeCheckThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DateAndTimeCheckThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DreamTeamRaidCheckBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DreamTeamRaidCheckBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +47,20 @@
       <recent name="" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Bot" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -71,7 +84,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678817148653</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="time and replies check">
+      <created>1678989165413</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1678989165413</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -88,6 +108,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first version" />
     <MESSAGE value="upd" />
-    <option name="LAST_COMMIT_MESSAGE" value="upd" />
+    <MESSAGE value="time and replies check" />
+    <option name="LAST_COMMIT_MESSAGE" value="time and replies check" />
   </component>
 </project>

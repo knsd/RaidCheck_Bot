@@ -4,9 +4,9 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 public class Main {
     public static void main(String[] args) {
-
-        DreamTeamRaidCheckBot dreamTeamRaidCheckBot = new DreamTeamRaidCheckBot();
-        DateAndTimeCheckThread dateAndTimeCheckThread = new DateAndTimeCheckThread(dreamTeamRaidCheckBot);
+        DataSaver dataSaver = new DataSaver();
+        DreamTeamRaidCheckBot dreamTeamRaidCheckBot = new DreamTeamRaidCheckBot(dataSaver);
+        DateAndTimeCheckThread dateAndTimeCheckThread = new DateAndTimeCheckThread(dreamTeamRaidCheckBot, dataSaver);
         dateAndTimeCheckThread.start();
 
         try {

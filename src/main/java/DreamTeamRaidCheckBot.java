@@ -8,11 +8,17 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
-    private int receivedReply;
-    private boolean negativeReply;
+    private final Long chatID1 = -938867741L;
+    private final Long chatID2 = 1328572042L;
 
+    private DataSaver dataSaver;
+
+    DreamTeamRaidCheckBot (DataSaver dataSaver){
+        this.dataSaver = dataSaver;
+    }
     @Override
     public void onUpdateReceived(Update update) {
         // We check if the update has a message and the message has text
@@ -26,12 +32,12 @@ public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
             PollAnswer pollAnswer = update.getPollAnswer();
             List <Integer> optionIds = pollAnswer.getOptionIds();
             if (optionIds.isEmpty()){
-                receivedReply = receivedReply - 1;
+                dataSaver.setReceivedReply(dataSaver.getReceivedReply() - 1);
             } else {
-                receivedReply = receivedReply + 1;
+                dataSaver.setReceivedReply(dataSaver.getReceivedReply() + 1);
                 for (Integer option: optionIds) {
                     if (option == 1) {
-                        negativeReply = true;
+                        dataSaver.setNegativeReply(true);
                         break;
                     }
                 }
@@ -51,7 +57,7 @@ public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
     }
 
     public boolean toReact(Message message){
-        if (message.getChatId()==-938867741 || message.getChatId()== 1328572042) {
+        if (Objects.equals(message.getChatId(), chatID1) || Objects.equals(message.getChatId(), chatID2)) {
             return true;
         }
         return false;
@@ -63,7 +69,7 @@ public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
         options.add("нет");
 
         SendPoll poll = new SendPoll();
-        poll.setChatId("-938867741");
+        poll.setChatId(chatID1.toString());
         poll.setIsAnonymous(false);
         poll.setQuestion("Сбору быть или не быть, вот в чем вопрос");
         poll.setOptions(options);
@@ -77,8 +83,8 @@ public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
 
     public void sendResult(){
         SendMessage message = new SendMessage(); // Create a SendMessage object with mandatory fields
-        message.setChatId("-938867741");
-        if (receivedReply == 4 & !negativeReply) {
+        message.setChatId(chatID1.toString());
+        if (dataSaver.getReceivedReply() == 4 & !dataSaver.isNegativeReply()) {
             message.setText("да будет сбор");
         } else {
             message.setText("Сбор отменен, трифекта сама себя не сделает, лентяи");
@@ -88,7 +94,7 @@ public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-        receivedReply = 0;
-        negativeReply = false;
+        dataSaver.setReceivedReply(0);
+        dataSaver.setNegativeReply(false);
     }
 }

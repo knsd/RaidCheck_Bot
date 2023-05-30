@@ -10,6 +10,7 @@ public class DataSaver {
     private boolean negativeReply;
     private int lastDateCheck;
     private int lastResultCheck;
+    private String pollId;
 
     private Semaphore semaphore;
 
@@ -20,6 +21,7 @@ public class DataSaver {
         try {
             FileReader fileReader = new FileReader(savedData);
             Scanner scanner = new Scanner(savedData);
+            pollId = scanner.nextLine();
             receivedReply = Integer.parseInt(scanner.nextLine());
             lastDateCheck = Integer.parseInt(scanner.nextLine());
             lastResultCheck = Integer.parseInt(scanner.nextLine());
@@ -68,6 +70,15 @@ public class DataSaver {
         saveCurrentData();
     }
 
+    public String getPollId() {
+        return pollId;
+    }
+
+    public void setPollId(String pollId) {
+        this.pollId = pollId;
+        saveCurrentData();
+    }
+
     public void saveCurrentData (){
         try {
             semaphore.acquire();
@@ -79,6 +90,8 @@ public class DataSaver {
         File savedData = new File("SavedData.txt");
         try{
             FileWriter fileWriter = new FileWriter(savedData);
+            fileWriter.write(pollId);
+            fileWriter.write("\n");
             fileWriter.write(Integer.toString(receivedReply));
             fileWriter.write("\n");
             fileWriter.write(Integer.toString(lastDateCheck));

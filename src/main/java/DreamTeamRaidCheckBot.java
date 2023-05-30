@@ -15,10 +15,13 @@ public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
     private final Long chatID2 = 1328572042L;
 
     private DataSaver dataSaver;
+    private String token;
 
-    DreamTeamRaidCheckBot (DataSaver dataSaver){
+    DreamTeamRaidCheckBot(DataSaver dataSaver, String token) {
         this.dataSaver = dataSaver;
+        this.token = token;
     }
+
     @Override
     public void onUpdateReceived(Update update) {
         // We check if the update has a message and the message has text
@@ -28,14 +31,17 @@ public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
             message.setText(update.getMessage().getText());
             // System.out.println(update.getMessage().getChatId());
 
-        } else if(update.hasPollAnswer()){
+        } else if (update.hasPollAnswer()) {
             PollAnswer pollAnswer = update.getPollAnswer();
-            List <Integer> optionIds = pollAnswer.getOptionIds();
-            if (optionIds.isEmpty()){
+            if (!pollAnswer.getPollId().equals(dataSaver.getPollId())) {
+                return;
+            }
+            List<Integer> optionIds = pollAnswer.getOptionIds();
+            if (optionIds.isEmpty()) {
                 dataSaver.setReceivedReply(dataSaver.getReceivedReply() - 1);
             } else {
                 dataSaver.setReceivedReply(dataSaver.getReceivedReply() + 1);
-                for (Integer option: optionIds) {
+                for (Integer option : optionIds) {
                     if (option == 1) {
                         dataSaver.setNegativeReply(true);
                         break;
@@ -53,10 +59,10 @@ public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "5657681076:AAFeyV7FL9D0k79gUfFr_aYMK0Lwz9hMRVE";
+        return token;
     }
 
-    public boolean toReact(Message message){
+    public boolean toReact(Message message) {
         System.out.println(message.getChatId());
         if (Objects.equals(message.getChatId(), chatID1) || Objects.equals(message.getChatId(), chatID2)) {
             return true;
@@ -64,7 +70,7 @@ public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
         return false;
     }
 
-    public void sendPoll(){
+    public void sendPoll() {
         List<String> options = new ArrayList<>();
         options.add("да");
         options.add("нет");
@@ -76,13 +82,15 @@ public class DreamTeamRaidCheckBot extends TelegramLongPollingBot {
         poll.setOptions(options);
 
         try {
-            execute(poll); // Call method to send the message
+            Message sentPoll = execute(poll); // Call method to send the message
+            String pollId = sentPoll.getPoll().getId();
+            dataSaver.setPollId(pollId);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
     }
 
-    public void sendResult(){
+    public void sendResult() {
         SendMessage message = new SendMessage(); // Create a SendMessage object with mandatory fields
         message.setChatId(chatID1.toString());
         if (dataSaver.getReceivedReply() == 4 & !dataSaver.isNegativeReply()) {
